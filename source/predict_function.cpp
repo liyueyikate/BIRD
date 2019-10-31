@@ -1,5 +1,6 @@
 #include "predict_header.h"
 
+// [[Rcpp::export]]
 void ReleaseExondata(Exondata target)
 {
 	std::vector<std::string>().swap(target.sample_name);
@@ -7,6 +8,7 @@ void ReleaseExondata(Exondata target)
 	std::vector<std::vector<double> >().swap(target.data);
 }
 
+// [[Rcpp::export]]
 //check the input data format
 int CheckTCid(char **lib_TC, std::vector<std::string> in_TC, int Length)  
 {
@@ -21,7 +23,7 @@ int CheckTCid(char **lib_TC, std::vector<std::string> in_TC, int Length)
 	return 0;
 }
 
-
+// [[Rcpp::export]]
 //match input data with separate character
 int MatchExon_sep(char **lib_TC, Exondata *indata, int Length, int *match_idx, std::string sep_str)
 {
@@ -67,7 +69,7 @@ int MatchExon_sep(char **lib_TC, Exondata *indata, int Length, int *match_idx, s
     }
 }
 
-
+// [[Rcpp::export]]
 //match data with extract match
 int MatchExon(char **lib_TC, Exondata *indata, int Length, int *match_idx)
 {
@@ -103,7 +105,7 @@ int MatchExon(char **lib_TC, Exondata *indata, int Length, int *match_idx)
     }
 }
 
-
+// [[Rcpp::export]]
 //write matched gene expression data matrix
 int WriteExpr(double **data_out, std::vector<std::string> outname, char **lib_TC, char *outfile, int Length, int sample_size)
 {
@@ -144,7 +146,7 @@ int WriteExpr(double **data_out, std::vector<std::string> outname, char **lib_TC
     return 0;
 }
 
-
+// [[Rcpp::export]]
 //read in gene expression data
 int ReadinExon(char filename[255], Exondata *indata)  
 {
@@ -194,6 +196,7 @@ int ReadinExon(char filename[255], Exondata *indata)
 
 }
 
+// [[Rcpp::export]]
 //shell sorting algorithm
 void ShellSort(double *num, int *index, int numLength)    
 {
@@ -225,7 +228,7 @@ void ShellSort(double *num, int *index, int numLength)
 	}
 	return;
 }
-
+// [[Rcpp::export]]
 //get ranking of the sorted data
 void GetRank(double *rank, double *num,int numLength)
 {
@@ -254,6 +257,7 @@ void GetRank(double *rank, double *num,int numLength)
     return;
 }
 
+// [[Rcpp::export]]
 //quantile normalizaiton with a vector of known quantile
 void QuantileNorm(double *indata, double *quantile, int dataLength) 
 {
@@ -288,6 +292,7 @@ void QuantileNorm(double *indata, double *quantile, int dataLength)
 	return;
 }
 
+// [[Rcpp::export]]
 //stadardization
 void StandardizeRow(double **data_in, double *Mean, double *SD, int Length, int sample_size)  
 {
@@ -312,6 +317,7 @@ void StandardizeRow(double **data_in, double *Mean, double *SD, int Length, int 
 	return;
 }
 
+// [[Rcpp::export]]
 //Reverse standardization
 void StandardizeRow_r(double **data_in, double *Mean, double *SD, int Length, int sample_size)  
 {
@@ -326,6 +332,7 @@ void StandardizeRow_r(double **data_in, double *Mean, double *SD, int Length, in
 	return;
 }
 
+// [[Rcpp::export]]
 //calculate average value within each gene cluster
 void ClusterMean(double **data_matrix, double **data_mean, int *cluster_idx, int p_length, int c_length, int sample_size)
 {
@@ -361,6 +368,7 @@ void ClusterMean(double **data_matrix, double **data_mean, int *cluster_idx, int
 	return;
 }
 
+// [[Rcpp::export]]
 //read in the pre-built prediction model file
 int ReadinModel(char filename[255], double *quantile_in, double *exon_mean, double *exon_sd, double **coef, double *DNase_mean, double *DNase_sd, int **pre_idx, char **TC_id, int *cluster_idx, char **select_loci, int p_length, int var_length, int loci_length, double **dis_matrix, int **DH_cluster, double **DH_coef1, double **DH_coef2, double **DH_coef3, int **DH_pre_idx1, int **DH_pre_idx2, int **DH_pre_idx3, int DH_num1, int DH_num2, int DH_num3)
 {
@@ -436,6 +444,7 @@ int ReadinModel(char filename[255], double *quantile_in, double *exon_mean, doub
 	return 0;
 }
 
+// [[Rcpp::export]]
 //read the parameters used in the prediction model
 int ReadPar(char filename[255], int &loci_size, int &predictor_size, int &cluster_size, int &bin_size, int &var_size, int &DH_num1, int &DH_num2, int &DH_num3)
 {
@@ -465,6 +474,7 @@ int ReadPar(char filename[255], int &loci_size, int &predictor_size, int &cluste
 	return 0;
 }
 
+// [[Rcpp::export]]
 //regression according to known coefficients and predictor indexes
 void Regression(double **predictor, double **output, double **coef, int **predictor_idx, int var_length, int loci_length, int sample_size)
 {
@@ -483,6 +493,7 @@ void Regression(double **predictor, double **output, double **coef, int **predic
 	return;
 }
 
+// [[Rcpp::export]]
 //model average from different level of prediction
 void ModelAverage(double **output, double **DH_pre1, double **DH_pre2, double **DH_pre3, double **dis_matrix, int **DH_cluster, int loci_length, int sample_size)
 {
@@ -498,6 +509,7 @@ void ModelAverage(double **output, double **DH_pre1, double **DH_pre2, double **
 	return;
 }
 
+// [[Rcpp::export]]
 //write ouput file in the format of data matrix or wig file
 int WriteWIG(double **data_out, char **select_idx, std::vector<std::string> outname, char *outfile, int bin_size, int loci_length, int sample_size, int flag, double up_bound)
 {
@@ -654,6 +666,7 @@ int WriteWIG(double **data_out, char **select_idx, std::vector<std::string> outn
 	return 0;
 }
 
+// [[Rcpp::export]]
 void help_info()
 {
 	std::cout << "Usage:" << std::endl;
